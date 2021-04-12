@@ -1,8 +1,10 @@
 ## This is my Hero99's aptitude test
 
+O link do app hospedado na vercel https://hero99-test.vercel.app/
+
 ## Hight Level Used Technologies
 
-NextJs - React framework
+NextJs - React framework <br/>
 Antd - React css lib
 
 ## Getting Started
@@ -23,4 +25,4 @@ npm run dev
 # or
 yarn dev
 ```
-Then access your localhost in 3000 port [http:\\localhost:3000] 
+Then access your localhost in 3000 port http://localhost:3000 
