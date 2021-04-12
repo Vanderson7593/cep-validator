@@ -1,65 +1,107 @@
-import Head from 'next/head'
+import React, { useState, useRef } from 'react'
+const axios = require('axios');
+const R = require('ramda');
+import { DatePicker, Typography, Input, Button, Alert } from 'antd';
 import styles from '../styles/Home.module.css'
+const { Title } = Typography
 
-export default function Home() {
+const Home = () => {
+
+
+  const [text, setText] = useState('')
+  const [searchError, setSearchError] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const [data, setData] = useState({})
+
+  const handleValidate = (value) => {
+    if (value.trim().length === 8) {
+      setError(false)
+      return false
+    } else {
+      setError(true)
+      return true
+    }
+  }
+
+  const searchCEP = async (value) => {
+    setLoading(true)
+    await axios.get(`https://viacep.com.br/ws/${value}/json/`)
+      .then(function (response) {
+        console.log(response.data)
+        setData(response.data)
+        setLoading(false)
+      })
+      .catch(function (error) {
+        searchError(true)
+      })
+  }
+
+  const handleReset = () => {
+    setData({})
+    setError(false)
+    setText('')
+  }
+
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+        <Title>Search for CEP</Title>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+        <div>
+          <div className={styles.wrapper}>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+            <Input
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              placeholder="Enter a CEP"
+              data-testid="search-input"
+            />
+            <Button
+              loading={loading ? true : false}
+              type="primary"
+              onClick={() => (!handleValidate(text)) && searchCEP(text)}
+              data-testid="search-button"
+            >Search</Button>
+          </div>
+          {
+            error && <Alert
+              message="This field must have 8 characters!"
+              type="error"
+              showIcon data-testid="search-error"
+            />
+          }
         </div>
-      </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+        {
+          !R.isEmpty(data) &&
+          <div>
+            <div style={{ paddingTop: 20 }}>
+              {
+                data.erro ?
+                  <Title level={1}>Invalid CEP</Title>
+                  :
+                  <Title level={1}>CEP: {data.cep}</Title>
+              }
+            </div>
+
+            <div>
+              <Button danger onClick={handleReset}>Reset</Button>
+            </div>
+          </div>
+        }
+
+        {
+          searchError &&
+          <Title>
+            Something went wrong please verify your <br /> internet connection and try again!
+           </Title>
+        }
+
+      </main>
     </div>
   )
 }
+
+export default Home
