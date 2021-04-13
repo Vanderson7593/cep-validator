@@ -1,12 +1,12 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
+import { Typography, Input, Button, Alert } from 'antd';
+import styles from '../styles/Home.module.css'
 const axios = require('axios');
 const R = require('ramda');
-import { DatePicker, Typography, Input, Button, Alert } from 'antd';
-import styles from '../styles/Home.module.css'
+
 const { Title } = Typography
 
 const Home = () => {
-
 
   const [text, setText] = useState('')
   const [searchError, setSearchError] = useState(false)
@@ -33,7 +33,7 @@ const Home = () => {
         setLoading(false)
       })
       .catch(function (error) {
-        searchError(true)
+        setSearchError(true)
       })
   }
 
