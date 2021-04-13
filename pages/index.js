@@ -28,7 +28,6 @@ const Home = () => {
     setLoading(true)
     await axios.get(`https://viacep.com.br/ws/${value}/json/`)
       .then(function (response) {
-        console.log(response.data)
         setData(response.data)
         setLoading(false)
       })
