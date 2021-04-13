@@ -1,6 +1,6 @@
 ## This is my Hero99's aptitude test
 
-O link do app hospedado na vercel https://hero99-test.vercel.app/
+App's link hosted in vercel https://hero99-test.vercel.app/
 
 ## Hight Level Used Technologies
 
