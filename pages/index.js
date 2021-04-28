@@ -7,7 +7,6 @@ const R = require('ramda');
 const { Title } = Typography
 
 const Home = () => {
-
   const [text, setText] = useState('')
   const [searchError, setSearchError] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -22,6 +21,7 @@ const Home = () => {
       setError(true)
       return true
     }
+
   }
 
   const searchCEP = async (value) => {
