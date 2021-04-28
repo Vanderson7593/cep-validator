@@ -22,6 +22,7 @@ const Home = () => {
       setError(true)
       return true
     }
+
   }
 
   const searchCEP = async (value) => {
