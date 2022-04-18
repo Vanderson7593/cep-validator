@@ -1,4 +1,4 @@
-## This is my Hero99's aptitude test
+## This is a simple CEP validator
 
 App's link hosted in vercel https://hero99-test.vercel.app/
 
