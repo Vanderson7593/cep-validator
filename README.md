@@ -1,6 +1,6 @@
 ## This is a simple CEP validator
 
-App's link hosted in vercel https://hero99-test.vercel.app/
+App's link hosted in vercel https://cep-validator.vercel.app/
 
 ## Hight Level Used Technologies
 
